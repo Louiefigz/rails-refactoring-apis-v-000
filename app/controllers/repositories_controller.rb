@@ -4,10 +4,11 @@ class RepositoriesController < ApplicationController
     @repos_array = JSON.parse(response.body)
   end
 
+# The Repo is not POSTing to Github
   def create
-    github = GithubService.new
-    response = github.create_repo(params[:name])
-  
+    github = GithubService.new({"access_token"=>session[:token]})
+     github.create_repo(params[:name])
+
     redirect_to '/'
   end
 end
